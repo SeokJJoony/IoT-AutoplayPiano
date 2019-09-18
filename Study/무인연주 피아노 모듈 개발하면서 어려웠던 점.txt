@@ -1,0 +1,7 @@
+*무인피아노 연주 모듈 개발하면서 어려웠던 점
+1. 처음에 88개의 건반을 아두이노 한개로 두들길 수 있을까 걱정했음. 우려와 달리시프트 레지스터(74HC595) 
+11개(각 8개핀)로 쉽게 가능했음. MIDI 파일이라는 것을 처음 알게됐고 아두이노 IDE에서 어떻게 읽는지(파일 입출력?)
+궁금했음. https://www.hackster.io/MoKo/arduino-controlled-piano-robot-pibot-641a06를 참고하여 MIDI 파일을
+텍스트로 변환해주는 사이트(http://flashmusicgames.com/midi/mid2txt.php.)를 찾음
+미디 파일은 채널 ON/OFF, 음계, 강세로 이루어져있었음, 나는 텍스트 파일을 아두이노 IDE에서 READ 및 시프트 
+레지스터로 입력하는 파트의 개발을 맡음.(19.09.18)   
