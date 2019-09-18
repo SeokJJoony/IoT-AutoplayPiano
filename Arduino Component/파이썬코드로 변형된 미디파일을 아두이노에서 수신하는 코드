@@ -1,0 +1,84 @@
+import processing.serial.*;
+
+Serial myPort;
+String[] inputLines;
+
+
+void setup()
+{
+  myPort = new Serial(this, "COM3", 9600);
+  inputLines = loadStrings("translated.txt");
+  run();
+}
+
+void run()
+{
+  //reads time and sends data bt line using data method
+  int lastTime = 0;
+  
+  for(int i = 0; i < inputLines.length; i++)
+  {
+    String temp = inputLines[i];
+    
+    //*5 is a tempo multiplier. increase the number if tempo is lower.
+    delay((Integer.parseInt(temp.substring(0, temp.indexOf(","))) - lastTime) * 5);
+    lastTime = Integer.parseInt(temp.substring(0, temp.indexOf(",")));
+    send(temp.substring(temp.indexOf(",") + 1));
+  }
+}
+
+void send(String data)
+{
+  //String first = data.substring(indexOforder(data, ",", 1), (indexOforder(data, ",", 2) + 1));
+  //String second = data.substring(indexOforder(data, ",", 2), (indexOforder(data, ",", 3) + 1));
+  //String third = data.substring(indexOforder(data, ",", 3), (indexOforder(data, ",", 4) + 1));
+  //String forth = data.substring(indexOforder(data, ",", 4), (indexOforder(data, ",", 5) + 1));
+  //String fifth = data.substring(indexOforder(data, ",", 5), (indexOforder(data, ",", 6) + 1));
+  //String sixth = data.substring(indexOforder(data, ",", 6), (indexOforder(data, ",", 7) + 1));
+  //String seventh = data.substring(indexOforder(data, ",", 7), (indexOforder(data, ",", 8) + 1));
+  //String eighth = data.substring(indexOforder(data, ",", 8), (indexOforder(data, ",", 9) + 1));
+  //String ninth = data.substring(indexOforder(data, ",", 9), (indexOforder(data, ",", 10) + 1));
+  //String tenth = data.substring(indexOforder(data, ",", 10), (indexOforder(data, ",", 11) + 1));
+  //String eleventh = data.substring(indexOforder(data, ",", 11), (indexOforder(data, ",", 12) + 1));
+  
+  //inverse declare
+  String eleventh = data.substring( 0 , indexOforder(data, ",", 1));
+  String tenth = data.substring((indexOforder(data, ",", 1) + 1), (indexOforder(data, ",", 2)));
+  String ninth = data.substring((indexOforder(data, ",", 2) + 1), (indexOforder(data, ",", 3)));
+  String eighth = data.substring((indexOforder(data, ",", 3) + 1), (indexOforder(data, ",", 4)));
+  String seventh = data.substring((indexOforder(data, ",", 4) + 1), (indexOforder(data, ",", 5)));
+  String sixth = data.substring((indexOforder(data, ",", 5) + 1), (indexOforder(data, ",", 6)));
+  String fifth = data.substring((indexOforder(data, ",", 6) + 1), (indexOforder(data, ",", 7)));
+  String forth = data.substring((indexOforder(data, ",", 7) + 1), (indexOforder(data, ",", 8)));
+  String third = data.substring((indexOforder(data, ",", 8) + 1), (indexOforder(data, ",", 9)));
+  String second = data.substring((indexOforder(data, ",", 9) + 1), (indexOforder(data, ",", 10)));
+  String first = data.substring(indexOforder(data, ",", 10) + 1);
+  
+  myPort.write("888f");
+  myPort.write(first + "f");
+  myPort.write(second + "f");
+  myPort.write(third + "f");
+  myPort.write(forth + "f");
+  myPort.write(fifth + "f");
+  myPort.write(sixth + "f");
+  myPort.write(seventh + "f");
+  myPort.write(eighth + "f");
+  myPort.write(ninth + "f");
+  myPort.write(tenth + "f");
+  myPort.write(eleventh + "f");
+  myPort.write("999f");
+}
+
+int indexOforder(String data, String find, int order)
+{
+  int currentOrder = 0;
+  int lastLocation = 0;
+  
+  while(currentOrder < order)
+  {
+    lastLocation = data.indexOf(find, (lastLocation + 1));
+    currentOrder += 1;
+  }
+  
+  return lastLocation;
+}
